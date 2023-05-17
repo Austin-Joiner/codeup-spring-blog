@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dice results</title>
+</head>
+<body>
+    <h1>Dice Results</h1>
+    <p>You guessed the number: <span th:text="${n}"></span></p>
+    <p>The 4 numbers rolled are below.</p>
+
+    <p>Dice one: <span th:text="${diceRollOne}"></span></p>
+    <p><span th:text="${messageOne}"></span></p>
+    <p>Dice two: <span th:text="${diceRollTwo}"></span></p>
+    <p><span th:text="${messageTwo}"></span></p>
+    <p>Dice three: <span th:text="${diceRollThree}"></span></p>
+    <p><span th:text="${messageThree}"></span></p>
+    <p>Dice four: <span th:text="${diceRollFour}"></span></p>
+    <p><span th:text="${messageFour}"></span></p>
+
+    <div th:if="${results}">
+        <p><span th:text="${counter + 1}"></span></p>
+    </div>
+
+
+    <p>Would you like to <a href="/roll-dice">Roll Again</a>?</p>
+
+</body>
+</html>
