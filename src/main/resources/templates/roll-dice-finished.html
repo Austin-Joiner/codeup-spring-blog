@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Dice Results</title>
+<head th:replace="partials/header.html :: header">
+
 </head>
 <body>
+
+<nav th:replace="partials/navbar.html :: navbar" />
+
 <h1>Dice Results</h1>
 <p>You guessed the number: <span th:text="${n}"></span></p>
 <hr>
@@ -22,7 +24,10 @@
     <p>Out of 5 rolls You got <span th:text="${counter}"></span> correct guesses.</p>
 </div>
 
-
 <p>Would you like to <a href="/roll-dice">Roll Again</a>?</p>
+
+
+<nav th:replace="partials/footer.html :: footer" />
+
 </body>
 </html>
