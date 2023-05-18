@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header.html :: header('post create')">
+
+</head>
+<body>
+
+<nav th:replace="partials/navbar.html :: navbar" />
+<div class="d-flex justify-content-center mb-5">
+<form method="POST" action="/posts/create">
+
+    <label for="title">Title: </label><br>
+    <input class="ml-3" type="text" id="title" name="title" required>
+<br>
+    <label for="body">Description: </label><br>
+    <textarea class="ml-3" id="body"  name="body" rows="4" required></textarea>
+<br>
+    <input type="submit" value="Create">
+</form>
+</div>
+
+
+
+<footer th:replace="partials/footer.html :: footer" />
+
+</body>
+</html>
