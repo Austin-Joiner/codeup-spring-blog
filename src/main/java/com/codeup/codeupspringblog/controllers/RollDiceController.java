@@ -6,70 +6,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Controller
 public class RollDiceController {
+    private int counter = 0;
+
     @GetMapping("/roll-dice")
     public String showRollDice() {
+        counter = 0;
         return "roll-dice";
     }
 
     @GetMapping("/roll-dice/{n}")
     public String rollDice(@PathVariable int n, Model model) {
         Random random = new Random();
-        int diceRollOne = random.nextInt(6) + 1;
-        int diceRollTwo = random.nextInt(6) + 1;
-        int diceRollThree = random.nextInt(6) + 1;
-        int diceRollFour = random.nextInt(6) + 1;
-        int counter = 0;
+        List<Integer> diceRolls = new ArrayList<>();
 
+        for (int i = 0; i < 5; i++) {
+            int diceRoll = random.nextInt(6) + 1;
+            diceRolls.add(diceRoll);
+            if (diceRoll == n) {
+                counter++;
+            }
+        }
 
         model.addAttribute("n", n);
-        model.addAttribute("diceRollOne", diceRollOne);
-        model.addAttribute("diceRollTwo", diceRollTwo);
-        model.addAttribute("diceRollThree", diceRollThree);
-        model.addAttribute("diceRollFour", diceRollFour);
+        model.addAttribute("diceRolls", diceRolls);
         model.addAttribute("counter", counter);
 
-        // Dice One conditional
-        if (n == diceRollOne) {
-            model.addAttribute("messageOne", "That is correct. GOOD JOB!");
-            model.addAttribute("results", +1);
-
-        } else {
-            model.addAttribute("messageOne", "oh no. You are wrong. Sorry.");
-        }
-
-
-        // Dice Two conditional
-        if (n == diceRollTwo) {
-            model.addAttribute("messageTwo", "That is correct. GOOD JOB!");
-            model.addAttribute("results", +1);
-
-        } else {
-            model.addAttribute("messageTwo", "oh no. You are wrong. Sorry.");
-        }
-
-
-        // Dice Three conditional
-        if (n == diceRollThree) {
-            model.addAttribute("messageThree", "That is correct. GOOD JOB!");
-            model.addAttribute("results", +1);
-
-        } else {
-            model.addAttribute("messageThree", "oh no. You are wrong. Sorry.");
-        }
-
-
-        // Dice Four conditional
-        if (n == diceRollFour) {
-            model.addAttribute("messageFour", "That is correct. GOOD JOB!");
-            model.addAttribute("results", +1);
-
-        } else {
-            model.addAttribute("messageFour", "oh no. You are wrong. Sorry.");
-        }
 
         return "roll-dice-finished";
     }

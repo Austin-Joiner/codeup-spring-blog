@@ -2,28 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dice results</title>
+    <title>Dice Results</title>
 </head>
 <body>
-    <h1>Dice Results</h1>
-    <p>You guessed the number: <span th:text="${n}"></span></p>
-    <p>The 4 numbers rolled are below.</p>
+<h1>Dice Results</h1>
+<p>You guessed the number: <span th:text="${n}"></span></p>
+<hr>
 
-    <p>Dice one: <span th:text="${diceRollOne}"></span></p>
-    <p><span th:text="${messageOne}"></span></p>
-    <p>Dice two: <span th:text="${diceRollTwo}"></span></p>
-    <p><span th:text="${messageTwo}"></span></p>
-    <p>Dice three: <span th:text="${diceRollThree}"></span></p>
-    <p><span th:text="${messageThree}"></span></p>
-    <p>Dice four: <span th:text="${diceRollFour}"></span></p>
-    <p><span th:text="${messageFour}"></span></p>
+<div th:each="diceRoll : ${diceRolls}">
+    <p>Dice roll: <span th:text="${diceRoll}"></span></p>
+    <p>
+        <span th:if="${diceRoll == n}">That is correct. GOOD JOB!</span>
+        <span th:unless="${diceRoll == n}">Oh no. You are wrong. Sorry.</span>
+    </p>
+    <hr>
+</div>
 
-    <div th:if="${results}">
-        <p><span th:text="${counter + 1}"></span></p>
-    </div>
+<div>
+    <p>Out of 5 rolls You got <span th:text="${counter}"></span> correct guesses.</p>
+</div>
 
 
-    <p>Would you like to <a href="/roll-dice">Roll Again</a>?</p>
-
+<p>Would you like to <a href="/roll-dice">Roll Again</a>?</p>
 </body>
 </html>
