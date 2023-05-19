@@ -2,11 +2,11 @@ package com.codeup.codeupspringblog.controllers;
 
 import com.codeup.codeupspringblog.models.Post;
 import com.codeup.codeupspringblog.repositories.PostRepository;
+import com.codeup.codeupspringblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,11 +16,13 @@ public class PostController {
 
         private final PostRepository postDao;
 
-    public PostController(PostRepository postDao) {
+
+        private final UserRepository userDao;
+
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao; // dependency injection
+        this.userDao = userDao;
     }
-
-
 
     //    Post findByTitle(String title);
 //    Post findByDescriptionContaining(String search);
