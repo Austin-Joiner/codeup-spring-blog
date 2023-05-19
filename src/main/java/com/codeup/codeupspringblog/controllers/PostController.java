@@ -45,6 +45,7 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public String getId(@PathVariable long id, Model model) {
         Post post = postDao.getReferenceById(id);
+        System.out.println(post.getUser().getEmail());
         model.addAttribute("post", post);
         return "posts/show";
     }
@@ -64,14 +65,11 @@ public class PostController {
     @PostMapping("/posts/create")
 
     public String postCreate(@RequestParam String title, @RequestParam String body) {
-        Post post = new Post(title, body);
+        User user = userDao.getReferenceById(1L); // Retrieve the user with ID 1
+        Post post = new Post(title, body, user);
 
-        User user = userDao.findById(1L).orElse(null); // Retrieve the user with ID 1
+            postDao.save(post);
 
-        if (user != null) {
-            post.setUser(user); // Assign the user to the post
-            postDao.save(post); // Save the post with the assigned user
-        }
 
         return "redirect:/posts";
     }

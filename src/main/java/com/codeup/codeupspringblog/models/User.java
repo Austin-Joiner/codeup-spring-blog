@@ -1,10 +1,9 @@
 package com.codeup.codeupspringblog.models;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -23,8 +22,26 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Post> posts;
+
 
     public User() {
+    }
+
+    public User(Long id, String username, String email, String password, List<Post> posts) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.posts = posts;
+    }
+
+    public User(String username, String email, String password, List<Post> posts) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.posts = posts;
     }
 
     public User(Long id, String username, String email, String password) {
@@ -42,6 +59,16 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -74,5 +101,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

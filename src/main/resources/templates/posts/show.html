@@ -10,11 +10,15 @@
 
 <div>
     <form action="/posts/{id}" method="POST">
-        <p th:text="${post.title}"></p>
-        <p th:text="${post.body}"></p>
+
         <input type="hidden" name="deleteId" th:value="${post.id}" />
         <input type="submit" value="Delete" />
+
     </form>
+
+    <p th:text="${post.user.email}"></p>
+    <p th:text="${post.title}"></p>
+    <p th:text="${post.body}"></p>
 </div>
 
 

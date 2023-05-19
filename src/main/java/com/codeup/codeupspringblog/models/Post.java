@@ -23,11 +23,11 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Post(Long id, String title, String body, User post) {
+    public Post(Long id, String title, String body, User user) {
         this.id = id;
         this.title = title;
         this.body = body;
-        this.user = post;
+        this.user = user;
     }
 
     public Post(long id, String title, String deleteBody) {
@@ -48,6 +48,12 @@ public class Post {
     public Post(String title, String body) {
         this.title = title;
         this.body = body;
+    }
+
+    public Post(String title, String body, User user) {
+        this.title = title;
+        this.body = body;
+        this.user = user;
     }
 
     public Post() {
@@ -87,6 +93,4 @@ public class Post {
         this.user = user;
     }
 
-    public void setUser(Optional<User> user) {
-    }
 }
