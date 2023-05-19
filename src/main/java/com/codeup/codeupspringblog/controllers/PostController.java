@@ -1,6 +1,7 @@
 package com.codeup.codeupspringblog.controllers;
 
 import com.codeup.codeupspringblog.models.Post;
+import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.PostRepository;
 import com.codeup.codeupspringblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -64,7 +66,12 @@ public class PostController {
     public String postCreate(@RequestParam String title, @RequestParam String body) {
         Post post = new Post(title, body);
 
-        postDao.save(post);
+        User user = userDao.findById(1L).orElse(null); // Retrieve the user with ID 1
+
+        if (user != null) {
+            post.setUser(user); // Assign the user to the post
+            postDao.save(post); // Save the post with the assigned user
+        }
 
         return "redirect:/posts";
     }
