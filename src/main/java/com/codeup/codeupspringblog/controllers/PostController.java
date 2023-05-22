@@ -58,22 +58,49 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String getCreate() {
+    public String getCreate(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
 
-    public String postCreate(@RequestParam String title, @RequestParam String body) {
+    public String postCreate(@ModelAttribute("post") Post post) {
         User user = userDao.getReferenceById(1L); // Retrieve the user with ID 1
-        Post post = new Post(title, body, user);
-
-            postDao.save(post);
-
+        post.setUser(user);
+        postDao.save(post);
 
         return "redirect:/posts";
     }
 
+
+    @GetMapping("/posts/{id}/edit")
+    public String getEdit(@PathVariable long id, Model model) {
+        Optional<Post> idPostCheck = postDao.findById(id);
+
+        if (idPostCheck.isPresent()) {
+            Post post = idPostCheck.get();
+            model.addAttribute("post", post);
+            return "posts/edit";
+        } else {
+            return "redirect:/posts/error";
+        }
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String postEdit(@ModelAttribute("post") Post post) {
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
+
+
+
+    @GetMapping("/posts/error")
+    @ResponseBody
+    public String errorMessage() {
+        return "error: invalid ID";
+    }
 
 
 

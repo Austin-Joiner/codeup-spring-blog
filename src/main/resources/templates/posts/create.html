@@ -7,13 +7,13 @@
 
 <nav th:replace="partials/navbar.html :: navbar" />
 <div class="d-flex justify-content-center mb-5">
-<form method="POST" action="/posts/create">
+<form th:object="${post}" method="POST" th:action="@{/posts/create}">
 
     <label for="title">Title: </label><br>
-    <input class="ml-3" type="text" id="title" name="title" required>
+    <input class="ml-3" type="text" id="title" th:field="*{title}" required>
 <br>
     <label for="body">Description: </label><br>
-    <textarea class="ml-3" id="body"  name="body" rows="4" required></textarea>
+    <textarea class="ml-3" id="body"  th:field="*{body}" rows="4" required></textarea>
 <br>
     <input type="submit" value="Create">
 </form>

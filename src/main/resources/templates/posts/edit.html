@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header.html :: header('post edit')">
+
+</head>
+<body>
+
+<nav th:replace="partials/navbar.html :: navbar" />
+<div class="d-flex justify-content-center mb-5">
+  <form th:object="${post}" method="POST" th:action="@{/posts/{id}/edit(id=${post.id})}">
+
+    <label for="title">Title:</label><br>
+    <input class="ml-3" type="text" id="title" th:field="*{title}" required>
+    <br>
+    <label for="body">Description:</label><br>
+    <textarea class="ml-3" id="body" th:field="*{body}" rows="4" required></textarea>
+    <br>
+    <input type="submit" value="Update">
+  </form>
+</div>
+
+<footer th:replace="partials/footer.html :: footer" />
+
+</body>
+</html>
