@@ -6,6 +6,8 @@
 <body>
 
 <nav th:replace="partials/navbar.html :: navbar" />
+
+
 <div class="d-flex justify-content-center mb-5">
 <form th:object="${post}" method="POST" th:action="@{/posts/create}">
 

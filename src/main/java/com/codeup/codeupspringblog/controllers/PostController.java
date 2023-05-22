@@ -4,6 +4,7 @@ import com.codeup.codeupspringblog.models.Post;
 import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.PostRepository;
 import com.codeup.codeupspringblog.repositories.UserRepository;
+import com.codeup.codeupspringblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,14 @@ public class PostController {
 
         private final PostRepository postDao;
 
+        private final EmailService emailService;
 
         private final UserRepository userDao;
 
-    public PostController(PostRepository postDao, UserRepository userDao) {
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao; // dependency injection
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
     //    Post findByTitle(String title);
@@ -67,42 +70,25 @@ public class PostController {
 
     public String postCreate(@ModelAttribute("post") Post post) {
         User user = userDao.getReferenceById(1L); // Retrieve the user with ID 1
+        String body = "your created a post with name '" + post.getTitle() + "' and a description of '" + post.getBody() + "'.";
         post.setUser(user);
         postDao.save(post);
-
+        emailService.prepareAndSend(post, "Post Creation", body);
         return "redirect:/posts";
     }
 
 
     @GetMapping("/posts/{id}/edit")
     public String getEdit(@PathVariable long id, Model model) {
-        Optional<Post> idPostCheck = postDao.findById(id);
-
-        if (idPostCheck.isPresent()) {
-            Post post = idPostCheck.get();
-            model.addAttribute("post", post);
-            return "posts/edit";
-        } else {
-            return "redirect:/posts/error";
-        }
+        Post post = postDao.findById(id).get();
+        model.addAttribute("post", post);
+        return "posts/edit";
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String postEdit(@ModelAttribute("post") Post post) {
+    public String postEdit(@ModelAttribute Post post) {
         postDao.save(post);
-        return "redirect:/posts";
+        return "redirect:/posts/" + post.getId();
     }
-
-
-
-
-    @GetMapping("/posts/error")
-    @ResponseBody
-    public String errorMessage() {
-        return "error: invalid ID";
-    }
-
-
-
 
 }

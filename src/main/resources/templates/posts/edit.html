@@ -6,8 +6,11 @@
 <body>
 
 <nav th:replace="partials/navbar.html :: navbar" />
+
+
 <div class="d-flex justify-content-center mb-5">
   <form th:object="${post}" method="POST" th:action="@{/posts/{id}/edit(id=${post.id})}">
+    <input type="hidden" id="user_id" th:field="*{user}">
 
     <label for="title">Title:</label><br>
     <input class="ml-3" type="text" id="title" th:field="*{title}" required>
