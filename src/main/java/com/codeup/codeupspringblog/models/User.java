@@ -2,7 +2,9 @@ package com.codeup.codeupspringblog.models;
 
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -13,10 +15,10 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -27,6 +29,15 @@ public class User {
 
 
     public User() {
+    }
+
+
+    //this is our security constructor
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
     }
 
     public User(Long id, String username, String email, String password, List<Post> posts) {
@@ -103,11 +114,16 @@ public class User {
         this.password = password;
     }
 
-    public List<Post> getPosts() {
-        return posts;
-    }
+//    public abstract Collection<? extends GrantedAuthority> getAuthorities();
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
+//    public List<Post> getPosts() {
+//        return posts;
+//    }
+//
+//    public void setPosts(List<Post> posts) {
+//        this.posts = posts;
+//    }
+
 }
+
+
