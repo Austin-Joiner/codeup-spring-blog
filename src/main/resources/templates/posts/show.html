@@ -10,12 +10,14 @@
 
 
 <div>
-    <form action="/posts/{id}" method="POST">
+    <form th:action="@{/posts/{id}/delete(id=${post.id})}" th:method="POST">
 
         <input type="hidden" name="deleteId" th:value="${post.id}" />
         <input type="submit" value="Delete" />
 
     </form>
+
+<!--    <a th:href="@{/posts/{id}/delete(id=${post.id})}" class="btn btn-danger">Delete</a>-->
 
     <p th:text="${post.user.email}"></p>
     <p th:text="${post.title}"></p>

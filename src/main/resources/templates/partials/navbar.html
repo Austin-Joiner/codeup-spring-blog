@@ -1,4 +1,4 @@
-<nav th:fragment="navbar" class="bg-info navbar navbar-expand ">
+<nav th:fragment="navbar" class="bg-info navbar navbar-expand " xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/ads">title</a>
@@ -9,11 +9,11 @@
                     <a class="nav-link" href="/posts/create">create</a></li>
 
         </div>
+
     </div>
     <div sec:authorize="isAuthenticated()">
     <ul>
         <!-- More links here... -->
-
         <li>
             <form th:action="@{/logout}" th:method="post">
                 <button class="btn-link btn" style="margin-top: 8px">Logout</button>

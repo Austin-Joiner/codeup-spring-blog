@@ -30,6 +30,8 @@ public class Post {
         this.user = user;
     }
 
+
+
     public Post(long id, String title, String deleteBody) {
         this.title = title;
     }

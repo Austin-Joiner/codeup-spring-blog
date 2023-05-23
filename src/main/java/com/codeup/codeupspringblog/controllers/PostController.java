@@ -49,17 +49,25 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public String getId(@PathVariable long id, Model model) {
         Post post = postDao.getReferenceById(id);
-        System.out.println(post.getUser().getEmail());
         model.addAttribute("post", post);
         return "posts/show";
     }
-    @PostMapping("/posts/{id}")
+    @PostMapping("/posts/{id}/delete")
     public String delete(@RequestParam long deleteId) {
 
             postDao.deleteById(deleteId);
 
         return "redirect:/posts";
     }
+
+//    @GetMapping("/posts/{id}/delete")
+//    public String deleteAnchor(@PathVariable long id) {
+//        Post post = postDao.findById(id).get();
+//        postDao.delete(post);
+//
+//        return "redirect:/posts";
+//    }
+
 
     @GetMapping("/posts/create")
     public String getCreate(Model model) {
